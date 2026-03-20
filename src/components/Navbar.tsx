@@ -69,28 +69,36 @@ export default function Navbar() {
             {status === "loading" ? (
               <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
             ) : session?.user ? (
-              <div className="flex items-center gap-4 bg-white/5 backdrop-blur-3xl border border-white/10 px-4 py-2 rounded-full">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-800 to-black flex items-center justify-center text-white font-black text-xs border border-white/20 shadow-inner">
-                    {session.user.name
-                      ?.split(" ")
-                      .map((word) => word[0])
-                      .join("")
-                      .toUpperCase()
-                      .slice(0, 2) || "U"}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white font-bold text-xs uppercase tracking-wider">{session.user.name}</span>
-                    <span className="text-zinc-500 text-[10px] uppercase tracking-widest">{session.user.email}</span>
-                  </div>
-                </div>
-                <div className="w-[1px] h-6 bg-white/10 mx-2" />
-                <button
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  className="text-[10px] font-black text-red-400 hover:text-red-300 transition-colors uppercase tracking-[0.2em]"
+              <div className="flex items-center gap-4">
+                <a
+                  href="/create"
+                  className="px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-black uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-indigo-500/20"
                 >
-                  Sign Out
-                </button>
+                  Studio
+                </a>
+                <div className="flex items-center gap-4 bg-white/5 backdrop-blur-3xl border border-white/10 px-4 py-2 rounded-full">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-800 to-black flex items-center justify-center text-white font-black text-xs border border-white/20 shadow-inner">
+                      {session.user.name
+                        ?.split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .toUpperCase()
+                        .slice(0, 2) || "U"}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-white font-bold text-xs uppercase tracking-wider">{session.user.name}</span>
+                      <span className="text-zinc-500 text-[10px] uppercase tracking-widest">{session.user.email}</span>
+                    </div>
+                  </div>
+                  <div className="w-[1px] h-6 bg-white/10 mx-2" />
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="text-[10px] font-black text-red-400 hover:text-red-300 transition-colors uppercase tracking-[0.2em]"
+                  >
+                    Sign Out
+                  </button>
+                </div>
               </div>
             ) : (
               <>
@@ -112,6 +120,7 @@ export default function Navbar() {
                 </motion.a>
               </>
             )}
+
           </div>
 
           {/* Mobile Toggle */}

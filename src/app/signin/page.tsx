@@ -42,7 +42,7 @@ export default function SignInPage() {
           {/* Sign In Card */}
           <div className="p-12 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-2xl relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
-            
+
             <div className="relative z-10 space-y-10">
               <div className="space-y-4">
                 <h1 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">
@@ -56,7 +56,7 @@ export default function SignInPage() {
 
               <div className="space-y-4 pt-4">
                 {/* Google Sign-In Button */}
-                <button 
+                <button
                   onClick={handleGoogleSignIn}
                   disabled={isLoading}
                   className="w-full py-5 px-8 rounded-full bg-white text-black font-black flex items-center justify-center gap-4 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-white/5 group/btn disabled:opacity-50 disabled:cursor-not-allowed"

@@ -1,64 +1,78 @@
+'use client';
+
+import { motion } from "framer-motion";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+
+const SkeletonA = () => (
+  <div className="flex-1 w-full h-full min-h-[8rem] rounded-xl overflow-hidden bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-4">
+    <div className="space-y-2 w-full">
+      {["✦ Transcribing audio...", "✦ Styling captions...", "✦ Exporting video."].map((t, i) => (
+        <motion.p key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.5, repeat: Infinity, repeatDelay: 2 }} className="text-white/70 text-xs font-mono">{t}</motion.p>
+      ))}
+    </div>
+  </div>
+);
+
+const SkeletonB = () => (
+  <div className="flex-1 w-full h-full min-h-[8rem] rounded-xl bg-gradient-to-br from-violet-900/30 to-black grid grid-cols-3 gap-2 p-4 items-center">
+    {["TikTok", "Reels", "Shorts", "Twitter", "LinkedIn", "Blog"].map((p, i) => (
+      <div key={i} className="text-[10px] text-center font-black uppercase tracking-widest text-zinc-500 bg-white/5 rounded-lg py-2 border border-white/[0.05]">{p}</div>
+    ))}
+  </div>
+);
+
+const SkeletonC = () => (
+  <div className="flex-1 w-full h-full min-h-[8rem] rounded-xl bg-gradient-to-br from-cyan-900/20 to-black flex flex-col justify-center gap-2 p-4">
+    {[["Clarity", 92], ["SEO Score", 88], ["Tone", 95]].map(([label, val]) => (
+      <div key={label} className="flex items-center gap-3">
+        <span className="text-[9px] text-zinc-600 uppercase font-black w-16 shrink-0">{label as string}</span>
+        <div className="flex-1 h-1 rounded-full bg-white/5 overflow-hidden">
+          <motion.div initial={{ width: 0 }} animate={{ width: `${val}%` }} transition={{ duration: 1.2 }} className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500" />
+        </div>
+        <span className="text-[9px] text-zinc-600 font-black">{val as number}</span>
+      </div>
+    ))}
+  </div>
+);
+
+const SkeletonD = () => (
+  <div className="flex-1 w-full h-full min-h-[8rem] rounded-xl bg-gradient-to-br from-rose-900/20 to-black flex items-end p-4 gap-1">
+    {[40, 70, 55, 90, 65, 100, 80].map((h, i) => (
+      <motion.div key={i} initial={{ height: 0 }} animate={{ height: `${h}%` }} transition={{ delay: i * 0.1, duration: 0.7 }} className="flex-1 rounded-t-sm bg-gradient-to-t from-rose-500/60 to-rose-400/10" />
+    ))}
+  </div>
+);
+
+const SkeletonE = () => (
+  <div className="flex-1 w-full h-full min-h-[8rem] rounded-xl bg-gradient-to-br from-amber-900/20 to-black flex items-center justify-center">
+    <div className="text-center">
+      <div className="text-5xl font-black text-white tracking-tighter">10x</div>
+      <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 mt-1">faster</div>
+    </div>
+  </div>
+);
+
+const bentoItems = [
+  { title: "AI Transcription", description: "99% accuracy across 50+ languages. No manual typing required.", header: <SkeletonA />, className: "md:col-span-2", icon: "✍️" },
+  { title: "Multi-Platform", description: "Auto-tailored captions for TikTok, Reels, Shorts, and more.", header: <SkeletonB />, className: "md:col-span-1", icon: "🌐" },
+  { title: "Quality Score", description: "Real-time analysis for clarity, tone, and SEO optimization.", header: <SkeletonC />, className: "md:col-span-1", icon: "📊" },
+  { title: "Analytics", description: "Track which captions drive the most engagement and clicks.", header: <SkeletonD />, className: "md:col-span-1", icon: "📈" },
+  { title: "10x Speed", description: "Automate the entire caption workflow and reclaim your time.", header: <SkeletonE />, className: "md:col-span-1", icon: "⚡" },
+];
+
 export default function Features() {
-  const features = [
-    {
-      title: "Smart Auto-Transcription",
-      description: "Our AI engine delivers 99% accuracy in over 50 languages. No more manual typing.",
-      icon: (
-        <svg className="w-8 h-8 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-        </svg>
-      )
-    },
-    {
-      title: "Dynamic Styles",
-      description: "Choose from 100+ templates tailored for TikTok, Reels, and YouTube Shorts.",
-      icon: (
-        <svg className="w-8 h-8 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-        </svg>
-      )
-    },
-    {
-      title: "AI Translation",
-      description: "Break language barriers. Translate your captions and reach a global audience instantly.",
-      icon: (
-        <svg className="w-8 h-8 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5a18.022 18.022 0 01-3.827-5.802M12 9A10.038 10.038 0 019 12.643M11 14a11 11 0 00-2 7m7-7a11 11 0 00-2-7" />
-        </svg>
-      )
-    }
-  ];
-
   return (
-    <section className="py-24 bg-black overflow-hidden selection:bg-white/30">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-20 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
-            Supercharge Your Workflow
-          </h2>
-          <p className="text-zinc-500 max-w-2xl mx-auto font-medium tracking-wide">
-            Everything you need to create content that stands out, powered by next-generation AI.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="group p-8 rounded-3xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-3xl hover:bg-white/[0.05] transition-all duration-500 flex flex-col items-center text-center space-y-6"
-            >
-              <div className="mb-2 p-4 rounded-2xl bg-white/[0.05] w-fit">
-                {feature.icon}
-              </div>
-              <h3 className="text-2xl font-bold text-white tracking-tight">
-                {feature.title}
-              </h3>
-              <p className="text-zinc-400 leading-relaxed font-medium opacity-80">
-                {feature.description}
-              </p>
-            </div>
+    <section id="features" className="py-24 px-6 bg-black">
+      <div className="max-w-7xl mx-auto space-y-16">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center space-y-3">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600">Capabilities</p>
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">Everything you need to <br /><span className="text-zinc-500">dominate content.</span></h2>
+        </motion.div>
+        <BentoGrid>
+          {bentoItems.map((item) => (
+            <BentoGridItem key={item.title} title={item.title} description={item.description} header={item.header} className={item.className} icon={<span className="text-lg">{item.icon}</span>} />
           ))}
-        </div>
+        </BentoGrid>
       </div>
     </section>
   );

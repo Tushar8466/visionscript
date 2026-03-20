@@ -12,7 +12,7 @@ export default function Hero() {
       {/* Spline Background - Full visibility */}
       <div className="absolute inset-0 z-0 opacity-100">
         <Spline
-          scene="https://prod.spline.design/7u0h-6LHKEPsSTGx/scene.splinecode" 
+          scene="https://prod.spline.design/cfMp6ckc7KLa0WhN/scene.splinecode" 
         />
       </div>
 
@@ -64,21 +64,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Social Proof / Stats Badge */}
-      <div className="absolute bottom-12 right-12 z-20 hidden md:block animate-in fade-in slide-in-from-right-8 duration-1000 delay-1000">
-        <div className="px-6 py-4 rounded-2xl bg-white/5 backdrop-blur-3xl border border-white/10 flex flex-col items-end gap-1">
-          <span className="text-2xl font-black text-white">100%</span>
-          <span className="text-[10px] tracking-widest font-bold text-zinc-400 uppercase">Automated AI</span>
-        </div>
-      </div>
 
-      {/* Refined Scroll Indicator */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 opacity-30">
-        <div className="flex flex-col items-center gap-8">
-          <span className="text-[10px] tracking-[0.5em] font-black text-white uppercase animate-pulse">Explore</span>
-          <div className="w-[1px] h-32 bg-gradient-to-b from-white via-white/40 to-transparent" />
-        </div>
-      </div>
     </section>
   );
 }

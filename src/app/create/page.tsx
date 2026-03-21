@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Uploader from '@/components/tool/Uploader';
@@ -18,8 +18,10 @@ export default function CreateDashboard() {
     },
   });
 
-
   const [toolState, setToolState] = useState<ToolState>('uploading');
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [transcript, setTranscript] = useState<any[]>([]);
+  const [progressMsg, setProgressMsg] = useState("Preparing video for AI...");
 
   if (status === "loading") {
     return (
@@ -46,9 +48,43 @@ export default function CreateDashboard() {
             >
               <div className="text-center space-y-4 mb-12">
                 <h1 className="text-4xl font-black text-white tracking-tighter">Create Magic</h1>
-                <p className="text-zinc-400 font-medium">Upload a video to let our AI do the heavy lifting.</p>
+                <p className="text-zinc-400 font-medium">Upload a video to let Gemini AI generate professional captions.</p>
               </div>
-              <Uploader onUploadComplete={() => setToolState('processing')} />
+              <Uploader onUploadComplete={async (url, file) => {
+                setVideoUrl(url);
+                setToolState('processing');
+                setProgressMsg("Uploading video to AI server...");
+                
+                try {
+                  const formData = new FormData();
+                  formData.append('file', file);
+
+                  const response = await fetch('/api/transcribe', {
+                    method: 'POST',
+                    body: formData,
+                  });
+
+                  if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Transcription failed');
+                  }
+
+                  setProgressMsg("AI is thinking... Generating semantic highlights...");
+                  const data = await response.json();
+                  
+                  // Map Gemini JSON into the format expected by Workspace
+                  const mappedTranscript = (data.transcript || []).map((chunk: any) => ({
+                    text: chunk.text,
+                    timestamp: [chunk.start, chunk.end]
+                  }));
+
+                  setTranscript(mappedTranscript);
+                  setToolState('workspace');
+                } catch (e: any) {
+                  console.error("Transcription failed", e);
+                  setProgressMsg(e.message || "Error transcribing video. Try a shorter clip.");
+                }
+              }} />
             </motion.div>
           )}
 
@@ -60,7 +96,7 @@ export default function CreateDashboard() {
               exit={{ opacity: 0, y: -20 }}
               className="flex-1 flex flex-col items-center justify-center w-full"
             >
-              <Processing onComplete={() => setToolState('workspace')} />
+              <Processing message={progressMsg} />
             </motion.div>
           )}
 
@@ -71,7 +107,15 @@ export default function CreateDashboard() {
               animate={{ opacity: 1 }}
               className="flex-1 w-full flex flex-col"
             >
-              <Workspace onReset={() => setToolState('uploading')} />
+              <Workspace 
+                videoUrl={videoUrl}
+                transcript={transcript}
+                onReset={() => {
+                  setVideoUrl(null);
+                  setTranscript([]);
+                  setToolState('uploading');
+                }} 
+              />
             </motion.div>
           )}
         </AnimatePresence>

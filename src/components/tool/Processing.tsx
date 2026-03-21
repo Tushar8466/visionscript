@@ -1,36 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-const steps = [
-  "Extracting audio track from video...",
-  "Running Whisper v3 for speech-to-text...",
-  "Running semantic analysis for pacing...",
-  "Identifying hooks and emotional peaks...",
-  "Applying typography and color styling...",
-  "Generating final subtitle render track..."
-];
-
-export default function Processing({ onComplete }: { onComplete: () => void }) {
-  const [currentStep, setCurrentStep] = useState(0);
-
-  useEffect(() => {
-    // Reveal steps dynamically
-    const interval = setInterval(() => {
-      setCurrentStep(prev => {
-        if (prev === steps.length - 1) {
-          clearInterval(interval);
-          setTimeout(onComplete, 1500);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 1200);
-
-    return () => clearInterval(interval);
-  }, [onComplete]);
-
+export default function Processing({ message }: { message: string }) {
   return (
     <div className="w-full max-w-lg mx-auto bg-white/[0.02] border border-white/[0.05] p-8 rounded-3xl shadow-2xl relative overflow-hidden">
       {/* Scanning laser effect overlay */}
@@ -53,30 +25,12 @@ export default function Processing({ onComplete }: { onComplete: () => void }) {
           </div>
         </div>
 
-        <div className="space-y-4">
-          {steps.map((step, idx) => (
-            <div key={idx} className="flex items-center gap-3">
-              <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 transition-colors duration-500
-                ${idx < currentStep ? 'bg-cyan-500' : idx === currentStep ? 'bg-cyan-500/30' : 'bg-white/5'}`}
-              >
-                {idx < currentStep && (
-                   <svg className="w-2.5 h-2.5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                   </svg>
-                )}
-                {idx === currentStep && (
-                   <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                )}
-              </div>
-              <p className={`text-sm font-medium transition-colors duration-500
-                ${idx < currentStep ? 'text-zinc-400' : idx === currentStep ? 'text-white' : 'text-zinc-700'}`}
-              >
-                {step}
-              </p>
-            </div>
-          ))}
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <p className="text-sm font-medium text-white">{message}</p>
         </div>
       </div>
     </div>
   );
 }
+

@@ -25,18 +25,20 @@ export const Scales = ({
         return "315deg";
     }
   };
+
   return (
     <div
       className={cn(
         "absolute inset-0 h-full w-full overflow-hidden",
-        "pointer-events-none select-none opacity-20",
+        "[--pattern-scales:var(--color-neutral-950)]/10",
+        "dark:[--pattern-scales:var(--color-white)]/10",
         className,
       )}
       style={
         {
           "--scales-size": `${size}px`,
           "--scales-angle": getGradientAngle(),
-          "--pattern-scales": color || "rgba(255,255,255,0.1)",
+          ...(color && { "--pattern-scales": color }),
         } as React.CSSProperties
       }
     >
@@ -64,7 +66,7 @@ export const ScalesContainer = ({
   color,
 }: ScalesContainerProps) => {
   return (
-    <div className={cn("relative overflow-hidden", containerClassName)}>
+    <div className={cn("relative", containerClassName)}>
       <Scales
         orientation={orientation}
         size={size}
@@ -75,3 +77,5 @@ export const ScalesContainer = ({
     </div>
   );
 };
+
+export Scales;

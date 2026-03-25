@@ -53,28 +53,28 @@ export const HoverEffect = ({
           <Card>
             {item.header}
             <div className="flex flex-col h-full">
-               {item.icon && (
-                 <div 
-                   className="relative w-12 h-12 rounded-2xl flex items-center justify-center mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300 border border-white/10"
-                   style={{ 
-                     backgroundColor: item.color ? `rgba(${item.color}, 0.1)` : 'rgba(255,255,255,0.05)',
-                     borderColor: item.color ? `rgba(${item.color}, 0.2)` : 'rgba(255,255,255,0.1)'
-                   }}
-                 >
-                   <div 
-                     className="absolute inset-0 blur-xl rounded-full opacity-25"
-                     style={{ backgroundColor: item.color ? `rgb(${item.color})` : 'white' }}
-                   />
-                   <div 
-                     className="relative z-10"
-                     style={{ color: item.color ? `rgb(${item.color})` : 'white' }}
-                   >
-                     {item.icon}
-                   </div>
-                 </div>
-               )}
-               <CardTitle>{item.title}</CardTitle>
-               <CardDescription>{item.description}</CardDescription>
+              {item.icon && (
+                <div
+                  className="relative w-12 h-12 rounded-2xl flex items-center justify-center mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300 border border-white/10"
+                  style={{
+                    backgroundColor: item.color ? `rgba(${item.color}, 0.1)` : 'rgba(255,255,255,0.05)',
+                    borderColor: item.color ? `rgba(${item.color}, 0.2)` : 'rgba(255,255,255,0.1)'
+                  }}
+                >
+                  <div
+                    className="absolute inset-0 blur-xl rounded-full opacity-25"
+                    style={{ backgroundColor: item.color ? `rgb(${item.color})` : 'white' }}
+                  />
+                  <div
+                    className="relative z-10"
+                    style={{ color: item.color ? `rgb(${item.color})` : 'white' }}
+                  >
+                    {item.icon}
+                  </div>
+                </div>
+              )}
+              <CardTitle>{item.title}</CardTitle>
+              <CardDescription>{item.description}</CardDescription>
             </div>
           </Card>
         </div>
@@ -93,7 +93,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-full w-full p-4 overflow-hidden bg-white/2 border border-white/10 group-hover:border-white/20 relative z-20 transition-colors",
         className
       )}
     >

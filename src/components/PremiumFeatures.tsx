@@ -2,12 +2,12 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { 
-  IconSignature, 
-  IconDeviceMobile, 
-  IconChartBar, 
-  IconTrendingUp, 
-  IconBolt 
+import {
+  IconSignature,
+  IconDeviceMobile,
+  IconChartBar,
+  IconTrendingUp,
+  IconBolt
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
@@ -65,14 +65,14 @@ const FeatureCard = ({ item }: { item: FeatureItem }) => {
       transition={{ duration: 0.3, ease: "easeOut" }}
       className={cn(
         "group relative flex flex-col p-8 rounded-[16px] overflow-hidden transition-all duration-300",
-        "bg-[#141414] border border-[#222] hover:border-transparent cursor-default"
+        "bg-white/2 border border-white/5 hover:bg-white/4 transition-colors cursor-default"
       )}
       style={{
         boxShadow: "0 0 0 0 transparent"
       }}
     >
       {/* Glow Border Effect - Appears on Hover */}
-      <div 
+      <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
           padding: "1px",
@@ -82,9 +82,9 @@ const FeatureCard = ({ item }: { item: FeatureItem }) => {
           maskComposite: "exclude"
         }}
       />
-      
+
       {/* Very subtle glow behind the card on hover */}
-      <div 
+      <div
         className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none blur-3xl"
         style={{ backgroundColor: item.color }}
       />
@@ -93,7 +93,7 @@ const FeatureCard = ({ item }: { item: FeatureItem }) => {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
       {/* Icon Badge */}
-      <div 
+      <div
         className="w-12 h-12 rounded-full flex items-center justify-center mb-6 shadow-lg"
         style={{ backgroundColor: item.color }}
       >
@@ -124,7 +124,7 @@ export default function PremiumFeatures() {
 
       <div className="max-w-7xl mx-auto space-y-20 relative z-10">
         {/* Section Heading */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -32,7 +32,7 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-24 px-6 bg-black border-t border-white/[0.05]">
+    <section id="pricing" className="py-24 px-6 bg-black border-t border-white/5">
       <div className="max-w-7xl mx-auto space-y-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -55,10 +55,10 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className={`relative flex flex-col p-8 rounded-3xl overflow-hidden transition-all duration-300
+              className={`relative overflow-hidden p-8 rounded-3xl flex flex-col justify-between space-y-8 transition-colors duration-300
                 ${plan.highlighted
-                  ? 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/20 shadow-2xl shadow-white/[0.05]'
-                  : 'bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04]'
+                  ? 'bg-gradient-to-br from-white/8 to-white/2 border border-white/20 shadow-2xl shadow-white/5'
+                  : 'bg-white/2 border border-white/5 hover:bg-white/4'
                 }`}
             >
               {plan.highlighted && (

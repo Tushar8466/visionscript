@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Captions. — AI-Powered Video Content Dominance
 
-## Getting Started
+![Project Banner](hero.png)
 
-First, run the development server:
+Captions. is a professional-grade, high-performance video captioning and content optimization platform. Built for the modern creator, it leverages high-fidelity AI models to transform raw video into social-media-ready content in seconds.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **AI-Powered Transcription**: 99% accuracy across 50+ languages, distinguishing between speakers and background noise.
+- **Multi-Platform Optimization**: Automatically tailor and format captions for TikTok, Instagram Reels, YouTube Shorts, and LinkedIn.
+- **Smart Quality Score**: Real-time analysis of your content's clarity, tone, and SEO potential.
+- **Advanced Analytics**: Track engagement and click-through rates driven by your AI-generated captions.
+- **10x Speed**: A server-side processing engine that eliminates the wait times of local AI models.
+- **Premium Dark Aesthetic**: A stunning, production-ready UI featuring 3D Spline backgrounds, glassmorphism, and smooth Framer Motion interactions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **AI Core**: [Google Gemini 1.5 Flash](https://deepmind.google/technologies/gemini/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **3D Graphics**: [Spline](https://spline.design/)
+- **Icons**: [Tabler Icons](https://tabler-icons.io/)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
 
-## Learn More
+## 🛠️ Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Node.js 18.x or later
+- NPM or Bun
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Installation
 
-## Deploy on Vercel
+1. Clone the repository:
+   ```bash
+   git clone [repository-url]
+   cd captions_project
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Set up environment variables:
+   Create a `.env` file in the root directory and add your credentials:
+   ```env
+   GEMINI_API_KEY=your_key_here
+   NEXTAUTH_SECRET=your_secret_here
+   # Add other required variables
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 🎨 UI & Design
+
+The project follows a "Premium SaaS" design philosophy:
+- Dark mode by default (#0a0a0a).
+- Interactive card hover effects with cursor tracking.
+- Depth through radial gradients and noise texture overlays.
+- Dynamic 3D backgrounds via Spline.
+
+## 📄 License
+
+This project is private and intended for demonstration purposes.
+
+---
+Built with ❤️ by the Captions. Team.

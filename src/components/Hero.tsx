@@ -12,7 +12,7 @@ export default function Hero() {
       {/* Spline Background - Full visibility */}
       <div className="absolute inset-0 z-0 opacity-100" style={{ pointerEvents: "none" }}>
         <Spline
-          scene="https://prod.spline.design/VVfRSvCX81cc0Re7/scene.splinecode"
+          scene="https://prod.spline.design/EKpfJzodoEp2LiUA/scene.splinecode"
         />
       </div>
 

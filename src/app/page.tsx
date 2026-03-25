@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import Features from "@/components/Features";
+import PremiumFeatures from "@/components/PremiumFeatures";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-black">
       <Hero />
-      <Features />
+      <PremiumFeatures />
       <HowItWorks />
       <Testimonials />
       <Pricing />

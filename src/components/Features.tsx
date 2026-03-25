@@ -1,19 +1,19 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import { 
-  IconSignature, 
-  IconDeviceMobile, 
-  IconChartBar, 
-  IconTrendingUp, 
-  IconBolt 
+import { HoverEffect } from "@/components/ui/card-hover-effect";
+import {
+  IconSignature,
+  IconDeviceMobile,
+  IconChartBar,
+  IconTrendingUp,
+  IconBolt
 } from "@tabler/icons-react";
 
 const SkeletonA = () => (
   <div className="flex flex-1 w-full h-full min-h-[10rem] rounded-xl overflow-hidden bg-dot-white/[0.2] bg-black border border-white/[0.05] relative flex-col justify-end p-4 shadow-sm group-hover/bento:shadow-xl transition-shadow duration-300">
     <div className="absolute inset-0 bg-gradient-to-t from-black via-zinc-900/40 to-transparent z-0" />
-    <motion.div 
+    <motion.div
       initial={{ y: 10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ repeat: Infinity, repeatType: "reverse", duration: 3 }}
@@ -31,7 +31,7 @@ const SkeletonB = () => (
     <div className="absolute w-[200px] h-[200px] bg-purple-500/20 rounded-full blur-3xl -top-10 -right-10" />
     <div className="grid grid-cols-2 gap-3 w-full relative z-10">
       {["TikTok", "Reels", "Shorts", "LinkedIn"].map((platform, i) => (
-        <motion.div 
+        <motion.div
           key={platform}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -60,11 +60,11 @@ const SkeletonC = () => {
             <span className="text-white">{score.val}</span>
           </div>
           <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
-            <motion.div 
-              initial={{ width: 0 }} 
-              animate={{ width: `${score.val}%` }} 
-              transition={{ delay: i * 0.2, duration: 1, ease: "easeOut" }} 
-              className={`h-full rounded-full bg-gradient-to-r ${score.color} shadow-[0_0_10px_rgba(34,211,238,0.4)]`} 
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${score.val}%` }}
+              transition={{ delay: i * 0.2, duration: 1, ease: "easeOut" }}
+              className={`h-full rounded-full bg-gradient-to-r ${score.color} shadow-[0_0_10px_rgba(34,211,238,0.4)]`}
             />
           </div>
         </div>
@@ -78,12 +78,12 @@ const SkeletonD = () => (
     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-rose-500/10 to-transparent" />
     <div className="flex items-end justify-between w-full h-[80%] gap-1.5 relative z-10">
       {[40, 65, 50, 85, 95, 75, 100].map((h, i) => (
-        <motion.div 
-          key={i} 
-          initial={{ height: 0 }} 
-          animate={{ height: `${h}%` }} 
-          transition={{ delay: i * 0.1, duration: 0.6 }} 
-          className="flex-1 rounded-t-sm w-full bg-gradient-to-t from-rose-600 to-rose-400 shadow-[0_0_15px_rgba(225,29,72,0.3)]" 
+        <motion.div
+          key={i}
+          initial={{ height: 0 }}
+          animate={{ height: `${h}%` }}
+          transition={{ delay: i * 0.1, duration: 0.6 }}
+          className="flex-1 rounded-t-sm w-full bg-gradient-to-t from-rose-600 to-rose-400 shadow-[0_0_15px_rgba(225,29,72,0.3)]"
         />
       ))}
     </div>
@@ -93,7 +93,7 @@ const SkeletonD = () => (
 const SkeletonE = () => (
   <div className="flex flex-1 w-full h-full min-h-[10rem] rounded-xl overflow-hidden bg-gradient-to-br from-amber-900/20 via-orange-900/10 to-black border border-white/[0.05] flex items-center justify-center relative shadow-inner">
     <div className="absolute w-[150px] h-[150px] bg-amber-500/20 rounded-full blur-3xl" />
-    <motion.div 
+    <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5, type: 'spring' }}
@@ -110,40 +110,45 @@ const SkeletonE = () => (
 );
 
 const bentoItems = [
-  { 
-    title: "AI Transcription", 
-    description: "99% accuracy across 50+ languages. No manual typing required.", 
-    header: <SkeletonA />, 
-    className: "md:col-span-2", 
-    icon: <IconSignature className="h-5 w-5 text-neutral-300" /> 
+  {
+    title: "AI Transcription",
+    description: "99% accuracy across 50+ languages. No manual typing required.",
+    header: <SkeletonA />,
+    className: "md:col-span-2",
+    icon: <IconSignature className="h-5 w-5" />,
+    color: "6, 182, 212"
   },
-  { 
-    title: "Multi-Platform", 
-    description: "Auto-tailored captions for TikTok, Reels, Shorts, and more.", 
-    header: <SkeletonB />, 
-    className: "md:col-span-1", 
-    icon: <IconDeviceMobile className="h-5 w-5 text-neutral-300" /> 
+  {
+    title: "Multi-Platform",
+    description: "Auto-tailored captions for TikTok, Reels, Shorts, and more.",
+    header: <SkeletonB />,
+    className: "md:col-span-1",
+    icon: <IconDeviceMobile className="h-5 w-5" />,
+    color: "99, 102, 241"
   },
-  { 
-    title: "Quality Score", 
-    description: "Real-time analysis for clarity, tone, and SEO optimization.", 
-    header: <SkeletonC />, 
-    className: "md:col-span-1", 
-    icon: <IconChartBar className="h-5 w-5 text-neutral-300" /> 
+  {
+    title: "Quality Score",
+    description: "Real-time analysis for clarity, tone, and SEO optimization.",
+    header: <SkeletonC />,
+    className: "md:col-span-1",
+    icon: <IconChartBar className="h-5 w-5" />,
+    color: "16, 185, 129"
   },
-  { 
-    title: "Analytics", 
-    description: "Track which captions drive the most engagement and clicks.", 
-    header: <SkeletonD />, 
-    className: "md:col-span-1", 
-    icon: <IconTrendingUp className="h-5 w-5 text-neutral-300" /> 
+  {
+    title: "Analytics",
+    description: "Track which captions drive the most engagement and clicks.",
+    header: <SkeletonD />,
+    className: "md:col-span-1",
+    icon: <IconTrendingUp className="h-5 w-5" />,
+    color: "244, 63, 94"
   },
-  { 
-    title: "10x Speed", 
-    description: "Automate the entire caption workflow and reclaim your time.", 
-    header: <SkeletonE />, 
-    className: "md:col-span-1", 
-    icon: <IconBolt className="h-5 w-5 text-amber-400" /> 
+  {
+    title: "10x Speed",
+    description: "Automate the entire caption workflow and reclaim your time.",
+    header: <SkeletonE />,
+    className: "md:col-span-1",
+    icon: <IconBolt className="h-5 w-5" />,
+    color: "245, 158, 11"
   },
 ];
 
@@ -151,10 +156,10 @@ export default function Features() {
   return (
     <section id="features" className="py-24 px-6 bg-black relative">
       <div className="max-w-7xl mx-auto space-y-16">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true }} 
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           className="text-center space-y-4"
         >
           <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600">
@@ -165,19 +170,8 @@ export default function Features() {
             <span className="text-zinc-500">dominate content.</span>
           </h2>
         </motion.div>
-        
-        <BentoGrid>
-          {bentoItems.map((item) => (
-            <BentoGridItem 
-              key={item.title} 
-              title={item.title} 
-              description={item.description} 
-              header={item.header} 
-              className={item.className} 
-              icon={item.icon} 
-            />
-          ))}
-        </BentoGrid>
+
+        <HoverEffect items={bentoItems} />
       </div>
     </section>
   );

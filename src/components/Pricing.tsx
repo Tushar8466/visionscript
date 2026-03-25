@@ -34,7 +34,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="py-24 px-6 bg-black border-t border-white/[0.05]">
       <div className="max-w-7xl mx-auto space-y-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -56,8 +56,8 @@ export default function Pricing() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
               className={`relative flex flex-col p-8 rounded-3xl overflow-hidden transition-all duration-300
-                ${plan.highlighted 
-                  ? 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/20 shadow-2xl shadow-white/[0.05]' 
+                ${plan.highlighted
+                  ? 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/20 shadow-2xl shadow-white/[0.05]'
                   : 'bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04]'
                 }`}
             >
@@ -66,7 +66,7 @@ export default function Pricing() {
                   Most Popular
                 </div>
               )}
-              
+
               <div className="space-y-4 mb-8">
                 <h3 className="text-xl font-bold text-white tracking-tight">{plan.name}</h3>
                 <div className="flex items-baseline gap-1">
@@ -88,8 +88,8 @@ export default function Pricing() {
               </div>
 
               <button className={`w-full py-4 rounded-full text-sm font-black uppercase tracking-widest transition-all
-                ${plan.highlighted 
-                  ? 'bg-white text-black hover:scale-[1.02] active:scale-[0.98]' 
+                ${plan.highlighted
+                  ? 'bg-white text-black hover:scale-[1.02] active:scale-[0.98]'
                   : 'bg-white/[0.05] text-white hover:bg-white/10'
                 }`}
               >

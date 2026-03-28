@@ -11,9 +11,10 @@ export const HoverEffect = ({
     title: string;
     description: string;
     link?: string;
-    header?: React.ReactNode;
     icon?: React.ReactNode;
     color?: string;
+    header?: React.ReactNode;
+    className?: string;
   }[];
   className?: string;
 }) => {
@@ -27,9 +28,10 @@ export const HoverEffect = ({
       )}
     >
       {items.map((item, idx) => (
-        <div
-          key={item?.title}
-          className="relative group  block p-2 h-full w-full"
+        <a
+          href={item?.link || "#"}
+          key={item?.link ? item?.link + idx : idx}
+          className={cn("relative group block p-2 h-full w-full", item.className)}
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -52,32 +54,23 @@ export const HoverEffect = ({
           </AnimatePresence>
           <Card>
             {item.header}
-            <div className="flex flex-col h-full">
-              {item.icon && (
-                <div
-                  className="relative w-12 h-12 rounded-2xl flex items-center justify-center mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300 border border-white/10"
-                  style={{
-                    backgroundColor: item.color ? `rgba(${item.color}, 0.1)` : 'rgba(255,255,255,0.05)',
-                    borderColor: item.color ? `rgba(${item.color}, 0.2)` : 'rgba(255,255,255,0.1)'
-                  }}
-                >
-                  <div
-                    className="absolute inset-0 blur-xl rounded-full opacity-25"
-                    style={{ backgroundColor: item.color ? `rgb(${item.color})` : 'white' }}
-                  />
-                  <div
-                    className="relative z-10"
-                    style={{ color: item.color ? `rgb(${item.color})` : 'white' }}
-                  >
-                    {item.icon}
-                  </div>
-                </div>
-              )}
-              <CardTitle>{item.title}</CardTitle>
-              <CardDescription>{item.description}</CardDescription>
-            </div>
+            {item.icon && item.color && (
+              <div 
+                className="w-12 h-12 rounded-[10px] flex items-center justify-center mb-6 mt-2" 
+                style={{ 
+                  backgroundColor: `rgba(${item.color}, 0.05)`, 
+                  borderColor: `rgba(${item.color}, 0.2)`,
+                  borderWidth: 1,
+                  color: `rgb(${item.color})` 
+                }}
+              >
+                {item.icon}
+              </div>
+            )}
+            <CardTitle>{item.title}</CardTitle>
+            <CardDescription>{item.description}</CardDescription>
           </Card>
-        </div>
+        </a>
       ))}
     </div>
   );
@@ -93,7 +86,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-white/2 border border-white/10 group-hover:border-white/20 relative z-20 transition-colors",
+        "rounded-2xl h-full w-full p-2 sm:p-4 overflow-hidden bg-[#050505] border border-white/[0.08] group-hover:border-white/[0.15] relative z-20 transition-colors duration-300",
         className
       )}
     >

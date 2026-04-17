@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const plans = [
   {
@@ -87,14 +88,16 @@ export default function Pricing() {
                 ))}
               </div>
 
-              <button className={`w-full py-4 rounded-full text-sm font-black uppercase tracking-widest transition-all
-                ${plan.highlighted
-                  ? 'bg-white text-black hover:scale-[1.02] active:scale-[0.98]'
-                  : 'bg-white/[0.05] text-white hover:bg-white/10'
-                }`}
+              <Link 
+                href="/join"
+                className={`w-full py-4 rounded-full text-sm font-black uppercase tracking-widest transition-all text-center
+                  ${plan.highlighted
+                    ? 'bg-white text-black hover:scale-[1.02] active:scale-[0.98]'
+                    : 'bg-white/[0.05] text-white hover:bg-white/10'
+                  }`}
               >
                 {plan.cta}
-              </button>
+              </Link>
             </motion.div>
           ))}
         </div>

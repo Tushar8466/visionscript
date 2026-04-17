@@ -11,6 +11,8 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 // --- Types ---
 interface FeatureItem {
@@ -140,6 +142,21 @@ export default function PremiumFeatures() {
 
         {/* Card Grid */}
         <HoverEffect items={featureItems} />
+
+        {/* CTA Button */}
+        <motion.div
+           initial={{ opacity: 0, scale: 0.95 }}
+           whileInView={{ opacity: 1, scale: 1 }}
+           viewport={{ once: true }}
+           className="flex justify-center pt-10"
+        >
+          <Link href="/studio">
+             <button className="group px-12 py-5 bg-white text-black text-xs font-black uppercase tracking-[0.2em] rounded-full hover:scale-105 hover:shadow-2xl hover:shadow-white/20 active:scale-95 transition-all flex items-center gap-3">
+               Start Captioning Now
+               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+             </button>
+          </Link>
+        </motion.div>
       </div>
 
       <style jsx global>{`

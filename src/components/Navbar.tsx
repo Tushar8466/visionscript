@@ -7,9 +7,8 @@ import { useSession, signOut } from "next-auth/react";
 
 const navLinks = [
   { name: 'Features', href: '#features' },
-  { name: 'Process', href: '#solutions' },
-  { name: 'Wall of Love', href: '#testimonials' },
   { name: 'Pricing', href: '#pricing' },
+  { name: 'Join Waitlist', href: '/join' },
 ];
 
 export default function Navbar() {
@@ -28,7 +27,7 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-[100] transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-100 transition-all duration-500',
         isScrolled ? 'py-4' : 'py-8'
       )}
     >
@@ -70,12 +69,6 @@ export default function Navbar() {
               <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
             ) : session?.user ? (
               <div className="flex items-center gap-4">
-                <a
-                  href="/create"
-                  className="px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-black uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-indigo-500/20"
-                >
-                  Studio
-                </a>
                 <div className="flex items-center gap-4 bg-white/5 backdrop-blur-3xl border border-white/10 px-4 py-2 rounded-full">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-800 to-black flex items-center justify-center text-white font-black text-xs border border-white/20 shadow-inner">
@@ -111,7 +104,7 @@ export default function Navbar() {
                   Log in
                 </motion.a>
                 <motion.a
-                  href="/signin"
+                  href="/join"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   className="px-6 py-3 bg-white text-black text-xs font-black uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/10"

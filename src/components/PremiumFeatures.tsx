@@ -20,6 +20,7 @@ interface FeatureItem {
   description: string;
   icon: React.ReactNode;
   color: string; // The accent color
+  link: string;
 }
 
 // --- Data ---
@@ -29,91 +30,37 @@ const featureItems: FeatureItem[] = [
     description: "99% accuracy across 50+ languages. No manual typing required.",
     icon: <IconSignature className="w-6 h-6" />,
     color: "20, 184, 166", // Teal
+    link: "#",
   },
   {
     title: "Multi-Platform",
     description: "Auto-tailored captions for TikTok, Reels, Shorts, and more.",
     icon: <IconDeviceMobile className="w-6 h-6" />,
     color: "168, 85, 247", // Purple
+    link: "#",
   },
   {
     title: "Quality Score",
     description: "Real-time analysis for clarity, tone, and SEO optimization.",
     icon: <IconChartBar className="h-6 w-6" />,
     color: "34, 197, 94", // Green
+    link: "#",
   },
   {
     title: "Analytics",
     description: "Track which captions drive the most engagement and clicks.",
     icon: <IconTrendingUp className="h-6 w-6" />,
     color: "249, 115, 22", // Orange
+    link: "#",
   },
   {
     title: "10x Speed",
     description: "Automate the entire caption workflow and reclaim your time.",
     icon: <IconBolt className="h-6 w-6" />,
     color: "6, 182, 212", // Cyan/Blue
+    link: "#",
   },
 ];
-
-// --- Sub-Components ---
-const FeatureCard = ({ item }: { item: FeatureItem }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={cn(
-        "group relative flex flex-col p-8 rounded-[16px] overflow-hidden transition-all duration-300",
-        "bg-white/2 border border-white/5 hover:bg-white/4 transition-colors cursor-default"
-      )}
-      style={{
-        boxShadow: "0 0 0 0 transparent"
-      }}
-    >
-      {/* Glow Border Effect - Appears on Hover */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          padding: "1px",
-          background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${item.color} 0%, transparent 100%)`,
-          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude"
-        }}
-      />
-
-      {/* Very subtle glow behind the card on hover */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none blur-3xl"
-        style={{ backgroundColor: item.color }}
-      />
-
-      {/* Noise Texture Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-      {/* Icon Badge */}
-      <div
-        className="w-12 h-12 rounded-full flex items-center justify-center mb-6 shadow-lg"
-        style={{ backgroundColor: item.color }}
-      >
-        {item.icon}
-      </div>
-
-      {/* Content */}
-      <div className="space-y-3">
-        <h3 className="text-[18px] font-semibold text-white tracking-tight">
-          {item.title}
-        </h3>
-        <p className="text-[14px] text-[#888] leading-[1.6] font-medium">
-          {item.description}
-        </p>
-      </div>
-    </motion.div>
-  );
-};
 
 // --- Main Component ---
 export default function PremiumFeatures() {

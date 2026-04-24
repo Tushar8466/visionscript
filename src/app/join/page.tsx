@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function JoinPage() {
   return (
-    <main className="min-h-screen bg-[#050505] selection:bg-indigo-500/30 flex flex-col items-center justify-center p-6 pt-32 pb-24">
+    <main className="min-h-screen bg-[#050505] selection:bg-indigo-500/30 flex flex-col items-center justify-center p-6 pt-16 pb-24">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-500/10 blur-[120px] rounded-full" />
@@ -15,6 +15,21 @@ export default function JoinPage() {
       </div>
 
       <div className="w-full max-w-5xl space-y-12 relative z-10">
+        {/* Top Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex justify-start"
+        >
+          <Link 
+            href="/" 
+            className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-all text-[10px] font-black uppercase tracking-[0.2em] bg-white/5 backdrop-blur-xl border border-white/10 px-5 py-2.5 rounded-full hover:bg-white/10 hover:border-white/20 shadow-2xl"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+            Back to Home
+          </Link>
+        </motion.div>
+
         {/* Header Section */}
         <div className="flex flex-col items-center text-center space-y-6">
           <motion.div 
@@ -100,7 +115,7 @@ export default function JoinPage() {
            </div>
            
            <a 
-             href="https://docs.google.com/forms/d/e/1FAIpQLSei2h66Us9IxWfpadWnkroKYLxGvp_LH8Vj5M9GRrHygWSSCg/viewform"
+             href="https://docs.google.com/forms/d/e/1FAIpQLSei2h66Us9IxWfpadWnkroKYLxGvp_LH8Vj5M9GRrHygWSSCg/viewform?embedded=true"
              target="_blank"
              rel="noopener noreferrer"
              className="px-10 py-4 bg-white text-black text-[11px] font-black uppercase tracking-[0.2em] rounded-full hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-white/10"
@@ -131,13 +146,6 @@ export default function JoinPage() {
              </div>
           </div>
 
-          <Link 
-            href="/" 
-            className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-[0.2em]"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Home
-          </Link>
         </motion.div>
       </div>
     </main>

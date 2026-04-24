@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useSession, signOut } from "next-auth/react";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { name: 'Features', href: '#features' },
@@ -12,9 +14,12 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { data: session, status } = useSession();
+
+  if (pathname === '/join') return null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -156,8 +161,8 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-4 flex flex-col gap-4">
-                <button className="text-sm font-bold text-white uppercase tracking-widest">Log in</button>
-                <button className="px-8 py-4 bg-white text-black text-sm font-black uppercase tracking-widest rounded-full">Get Started</button>
+                <Link href="/signin" className="text-sm font-bold text-white uppercase tracking-widest text-center" onClick={() => setIsMobileMenuOpen(false)}>Log in</Link>
+                <Link href="/join" className="px-8 py-4 bg-white text-black text-sm font-black uppercase tracking-widest rounded-full text-center" onClick={() => setIsMobileMenuOpen(false)}>Get Started</Link>
               </div>
             </div>
           </motion.div>

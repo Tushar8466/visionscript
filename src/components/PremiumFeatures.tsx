@@ -97,7 +97,7 @@ export default function PremiumFeatures() {
            viewport={{ once: true }}
            className="flex justify-center pt-10"
         >
-          <Link href="/studio">
+          <Link href="/join">
              <button className="group px-12 py-5 bg-white text-black text-xs font-black uppercase tracking-[0.2em] rounded-full hover:scale-105 hover:shadow-2xl hover:shadow-white/20 active:scale-95 transition-all flex items-center gap-3">
                Start Captioning Now
                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

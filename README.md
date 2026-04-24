@@ -71,4 +71,4 @@ The project follows a "Premium SaaS" design philosophy:
 This project is private and intended for demonstration purposes.
 
 ---
-Built with ❤️ by the Captions. Team.
+Built with ❤️ by the VisionScript Team.

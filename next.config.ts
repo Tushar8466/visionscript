@@ -2,10 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   serverExternalPackages: [
-    "sharp", 
-    "onnxruntime-node", 
-    "@tensorflow/tfjs-node", 
-    "canvas"
+    "sharp",
+    "onnxruntime-node",
+    "canvas",        // ✅ keep canvas
+    // ❌ removed tfjs-node
   ],
   turbopack: {
     root: process.cwd(),
@@ -13,6 +13,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-
-

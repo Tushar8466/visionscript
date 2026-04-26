@@ -1,100 +1,108 @@
-import { NextResponse } from 'next/server';
-import * as tf from '@tensorflow/tfjs-node';
+export const runtime = 'nodejs';
+
+import { NextResponse, NextRequest } from 'next/server';
+import * as tf from '@tensorflow/tfjs';
 import { createCanvas, loadImage } from 'canvas';
 
-// Cache for the model to avoid reloading on every request
-let model: any = null;
+let model: tf.LayersModel | null = null;
 let labels: string[] = [];
 
-/**
- * Loads the Teachable Machine model and metadata
- */
-async function loadModel() {
-  if (model) return { model, labels };
+const MODEL_URL = 'https://teachablemachine.withgoogle.com/models/O7jYEzYD2/';
 
-  const modelURL = process.env.NEXT_PUBLIC_MODEL_URL || 'https://teachablemachine.withgoogle.com/models/O7jYEzYD2/';
-  
-  try {
-    console.log('Loading model from:', modelURL);
-    model = await tf.loadLayersModel(`${modelURL}model.json`);
-    const metadataResponse = await fetch(`${modelURL}metadata.json`);
-    const metadata = await metadataResponse.json();
-    labels = metadata.labels;
-    return { model, labels };
-  } catch (error) {
-    console.error('Error loading Teachable Machine model:', error);
-    throw new Error('Failed to load model');
-  }
+async function ensureModelLoaded() {
+  if (model && labels.length > 0) return;
+  console.log('⏳ Loading model...');
+  model = await tf.loadLayersModel(MODEL_URL + 'model.json');
+  const res = await fetch(MODEL_URL + 'metadata.json');
+  const meta = await res.json();
+  labels = meta.labels;
+  console.log('✅ Model ready. Labels:', labels);
 }
 
-/**
- * Preprocesses an image from a buffer
- */
-async function preprocessImage(imageBuffer: Buffer) {
+async function preprocessImage(buffer: Buffer): Promise<tf.Tensor4D> {
   const size = 224;
   const canvas = createCanvas(size, size);
   const ctx = canvas.getContext('2d');
-  const img = await loadImage(imageBuffer);
+  const img = await loadImage(buffer);
   ctx.drawImage(img, 0, 0, size, size);
-  
-  return tf.browser.fromPixels(canvas as any)
-    .toFloat()
-    .div(tf.scalar(127.5))
-    .sub(tf.scalar(1))
-    .expandDims(0);
+  const { data } = ctx.getImageData(0, 0, size, size);
+  const rgb = new Float32Array(size * size * 3);
+  for (let i = 0, j = 0; i < data.length; i += 4, j += 3) {
+    rgb[j] = (data[i] / 127.5) - 1;
+    rgb[j + 1] = (data[i + 1] / 127.5) - 1;
+    rgb[j + 2] = (data[i + 2] / 127.5) - 1;
+  }
+  return tf.tensor4d(rgb, [1, size, size, 3]);
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  let input: tf.Tensor | null = null;
+  let output: tf.Tensor | null = null;
+
   try {
-    const { image } = await req.json();
+    const contentType = req.headers.get('content-type') || '';
+    let buffer: Buffer;
 
-    if (!image) {
-      return NextResponse.json({ error: 'No image provided' }, { status: 400 });
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await req.formData();
+      const file = (
+        formData.get('image') ||
+        formData.get('file') ||
+        formData.get('data')
+      ) as File | null;
+
+      if (!file) {
+        return NextResponse.json({ error: 'No file found' }, { status: 400 });
+      }
+      buffer = Buffer.from(await file.arrayBuffer());
+
+    } else if (contentType.includes('application/json')) {
+      const body = await req.json();
+      if (!body.image) {
+        return NextResponse.json({ error: 'No image in JSON' }, { status: 400 });
+      }
+      const base64 = body.image.replace(/^data:image\/\w+;base64,/, '');
+      buffer = Buffer.from(base64, 'base64');
+
+    } else {
+      buffer = Buffer.from(await req.arrayBuffer());
+      if (!buffer.length) {
+        return NextResponse.json({ error: 'Empty body' }, { status: 400 });
+      }
     }
 
-    const { model, labels } = await loadModel();
-    const base64Data = image.replace(/^data:image\/\w+;base64,/, '');
-    const imageBuffer = Buffer.from(base64Data, 'base64');
-    const tensor = await preprocessImage(imageBuffer);
+    await ensureModelLoaded();
 
-    // Predict
-    const predictions = await model.predict(tensor) as tf.Tensor;
-    const scores = await predictions.data();
-    
-    const results = Array.from(scores).map((score, i) => ({
-      className: labels[i] || `Class ${i}`,
-      probability: Number(score)
-    })).sort((a, b) => b.probability - a.probability);
+    input = await preprocessImage(buffer);
+    output = model!.predict(input) as tf.Tensor;
+    const scores = Array.from(await output.data());
 
-    // Forward output to n8n
-    const n8nWebhookUrl = 'https://n8n-1wtq.onrender.com';
-    try {
-      fetch(n8nWebhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'captions_ai_studio',
-          results,
-          topPrediction: results[0],
-          timestamp: new Date().toISOString()
-        })
-      }).catch(err => console.error('n8n background fetch error:', err));
-    } catch (e) {
-      console.error('n8n trigger failed:', e);
-    }
+    const predictions = scores
+      .map((score, i) => ({
+        className: labels[i] || `Class_${i}`,
+        probability: parseFloat(score.toFixed(4)),
+      }))
+      .sort((a, b) => b.probability - a.probability);
 
-    // Cleanup
-    tensor.dispose();
-    predictions.dispose();
+    const top = predictions[0];
+    console.log(`🏆 ${top.className} → ${(top.probability * 100).toFixed(1)}%`);
 
-    return NextResponse.json({ 
-      success: true, 
-      predictions: results,
-      topPrediction: results[0]
+    return NextResponse.json({
+      success: true,
+      label: top.className,
+      confidence: top.probability,
+      topPrediction: top,
+      predictions,
     });
 
-  } catch (error: any) {
-    console.error('Prediction error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', details: error.message }, { status: 500 });
+  } catch (err: any) {
+    console.error('❌ Error:', err.message);
+    return NextResponse.json(
+      { error: 'Prediction failed', details: err.message },
+      { status: 500 }
+    );
+  } finally {
+    input?.dispose();
+    output?.dispose();
   }
 }

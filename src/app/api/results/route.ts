@@ -1,10 +1,5 @@
-// src/app/api/results/route.ts
-// Fetches latest prediction result from Google Sheets
-
 import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
-
-const SHEET_ID = process.env.GOOGLE_SHEET_ID!; // add to .env.local
 
 export async function GET() {
   try {
@@ -19,26 +14,34 @@ export async function GET() {
     const sheets = google.sheets({ version: 'v4', auth });
 
     const response = await sheets.spreadsheets.values.get({
-      spreadsheetId: SHEET_ID,
-      range: 'Sheet1!A:Z', // adjust to your sheet range
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: 'Sheet1!A:J', 
     });
 
     const rows = response.data.values || [];
+    console.log('Sheet rows found:', rows.length);
+
     if (rows.length < 2) {
-      return NextResponse.json({ error: 'No data found' }, { status: 404 });
+      return NextResponse.json({ error: 'No data rows found' }, { status: 404 });
     }
 
-    const headers = rows[0]; // first row = column names
-    const latest  = rows[rows.length - 1]; // last row = latest result
+    const latest = rows[rows.length - 1];
+    console.log('Latest row data:', latest);
 
-    // Map to object
-    const result: Record<string, string> = {};
-    headers.forEach((h: string, i: number) => {
-      result[h] = latest[i] || '';
-    });
+    // Map to exact keys requested
+    const result = {
+      Timestamp: latest[0] || '',
+      "Image Name": latest[1] || '',
+      Category: latest[2] || '',
+      Tags: latest[3] || '',
+      "Formal Caption": latest[4] || '',
+      "Casual Caption": latest[5] || '',
+      "SEO Caption": latest[6] || '',
+      Confidence: latest[7] || '',
+      "Bias Flag": latest[8] || ''
+    };
 
     return NextResponse.json({ success: true, result });
-
   } catch (err: any) {
     console.error('Sheets error:', err.message);
     return NextResponse.json({ error: err.message }, { status: 500 });

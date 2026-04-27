@@ -4,12 +4,14 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconUpload, IconScan, IconSparkles, IconCheck, IconAlertCircle } from '@tabler/icons-react';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function ClassifierPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isClassifying, setIsClassifying] = useState(false);
   const [results, setResults] = useState<any[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -28,31 +30,38 @@ export default function ClassifierPage() {
   };
 
   const classifyImage = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage || !fileInputRef.current?.files?.[0]) return;
 
     setIsClassifying(true);
-    setResults([]);
 
     try {
-      const response = await fetch('/api/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ image: selectedImage }),
-      });
+      // a) Save image as base64 in sessionStorage
+      sessionStorage.setItem("uploadedImage", selectedImage);
 
-      const data = await response.json();
+      // b) Prepare FormData for n8n
+      const formData = new FormData();
+      formData.append('image', fileInputRef.current.files[0]);
 
-      if (data.success) {
-        setResults(data.predictions);
-        toast.success('DATA SENT TO N8N PIPELINE');
-      } else {
-        toast.error(data.error || 'CLASSIFICATION FAILED');
+      // c) Wrap fetch in try/catch — don't block if n8n fails
+      try {
+        const response = await fetch('/api/proxy-n8n', {
+          method: 'POST',
+          body: formData,
+        });
+        if (!response.ok) {
+          console.warn("Proxy returned error status:", response.status);
+          toast.error("PIPELINE START FAILED (404/500)");
+        }
+      } catch (e) {
+        console.warn("n8n push failed:", e);
+        toast.error("NETWORK ERROR: PIPELINE UNREACHABLE");
       }
+
+      // e) Redirect to /results
+      router.push('/results');
     } catch (error) {
       console.error('Classification error:', error);
-      toast.error('SYSTEM ERROR: UNABLE TO REACH CLASSIFIER');
+      toast.error('AN ERROR OCCURRED');
     } finally {
       setIsClassifying(false);
     }
